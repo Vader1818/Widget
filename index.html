@@ -22,8 +22,8 @@
   }
   
   #timer-container {
-    position: relative; /* Adicionando posição relativa para poder posicionar o loader ring */
-    margin-bottom: 20px; /* Adicionando margem abaixo do contador */
+    position: relative;
+    margin-bottom: 20px;
   }
   
   #timer {
@@ -37,11 +37,11 @@
     height: 50px;
     border: 4px solid #ccc;
     border-radius: 50%;
-    border-top-color: #00bfff; /* Cor inicial azul */
-    top: calc(50% - 75px); /* Posição acima do cronômetro */
-    left: calc(50% - 25px); /* Centralizar horizontalmente */
-    display: none; /* Inicialmente escondido */
-    z-index: 2; /* Colocando acima do contador */
+    border-top-color: #00bfff;
+    top: calc(50% - 150px); /* Alterado para posicionar mais acima */
+    left: calc(50% - 25px);
+    display: block; /* Alterado para iniciar visível */
+    z-index: 2;
   }
   
   .loader-fill {
@@ -50,11 +50,11 @@
     height: 42px;
     border-radius: 50%;
     border: 4px solid transparent;
-    border-top-color: #00bfff; /* Cor inicial azul */
+    border-top-color: #00bfff;
     top: 4px;
     left: 4px;
-    animation: fill-animation linear forwards; /* Animação de preenchimento */
-    display: none; /* Inicialmente escondido */
+    animation: fill-animation linear forwards;
+    display: block; /* Alterado para iniciar visível */
   }
   
   @keyframes fill-animation {
@@ -96,8 +96,8 @@
 <div class="container">
   <div id="timer-container">
     <div id="timer">00:00</div>
-    <div class="loader-ring"></div> <!-- Loader ring -->
-    <div class="loader-fill"></div> <!-- Loader fill -->
+    <div class="loader-ring"></div>
+    <div class="loader-fill"></div>
   </div>
   <button id="start" class="button">Iniciar</button>
   <button id="reset" class="button">Zerar</button>
@@ -124,8 +124,8 @@
   
   function startTimer() {
     let startTime = Date.now();
-    loaderRing.style.display = 'block'; // Exibir o loader ring ao iniciar o contador
-    loaderFill.style.display = 'block'; // Exibir o loader fill
+    loaderRing.style.display = 'block';
+    loaderFill.style.display = 'block';
     timer = setInterval(() => {
       const elapsedTime = Date.now() - startTime;
       totalSeconds = Math.max(totalSeconds - Math.floor(elapsedTime / 1000), 0);
@@ -133,8 +133,8 @@
       if (totalSeconds === 0) {
         clearInterval(timer);
         notify();
-        loaderRing.style.display = 'none'; // Esconder o loader ring ao finalizar o contador
-        loaderFill.style.display = 'none'; // Esconder o loader fill ao finalizar o contador
+        loaderRing.style.display = 'none';
+        loaderFill.style.display = 'none';
       }
       startTime = Date.now();
     }, 1000);
@@ -157,8 +157,8 @@
     startButton.textContent = 'Iniciar';
     startButton.removeEventListener('click', pauseTimer);
     startButton.addEventListener('click', startTimer);
-    loaderRing.style.display = 'none'; // Esconder o loader ring ao resetar o contador
-    loaderFill.style.display = 'none'; // Esconder o loader fill ao resetar o contador
+    loaderRing.style.display = 'none';
+    loaderFill.style.display = 'none';
   }
   
   function updateDisplay() {
@@ -167,7 +167,7 @@
     const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
     timerDisplay.textContent = `${displayMinutes}:${displaySeconds}`;
-    const percentage = ((totalSeconds) / (totalSeconds)) * 360; // 100% da circunferência
+    const percentage = ((totalSeconds) / (totalSeconds)) * 360;
     loaderFill.style.transform = `rotate(${percentage}deg)`;
   }
   
