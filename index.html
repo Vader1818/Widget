@@ -41,7 +41,7 @@
   #options {
     display: none;
     position: absolute;
-    background-color: #444444; /* Corrigido: definindo o fundo cinza */
+    background-color: #444444;
     color: #ffffff;
     padding: 20px;
     border-radius: 10px;
@@ -138,10 +138,12 @@
   resetButton.addEventListener('click', resetTimer);
   
   optionsButton.addEventListener('click', () => {
-    const isVisible = optionsMenu.style.display === 'block';
-    optionsMenu.style.display = isVisible ? 'none' : 'block';
-    optionsMenu.style.top = `${optionsButton.offsetTop + optionsButton.offsetHeight}px`;
-    optionsMenu.style.left = `${optionsButton.offsetLeft}px`;
+    const rect = optionsButton.getBoundingClientRect();
+    const topPosition = rect.top + rect.height;
+    const leftPosition = rect.left;
+    optionsMenu.style.top = `${topPosition}px`;
+    optionsMenu.style.left = `${leftPosition}px`;
+    optionsMenu.style.display = optionsMenu.style.display === 'none' ? 'block' : 'none';
   });
   
   const optionButtons = document.querySelectorAll('.option');
