@@ -38,9 +38,9 @@
     border: 4px solid #ccc;
     border-radius: 50%;
     border-top-color: #00bfff;
-    top: calc(50% - 150px); /* Alterado para posicionar mais acima */
+    top: calc(50% - 75px); /* Ajustado para ficar mais abaixo */
     left: calc(50% - 25px);
-    display: block; /* Alterado para iniciar visível */
+    display: block;
     z-index: 2;
   }
   
@@ -54,7 +54,7 @@
     top: 4px;
     left: 4px;
     animation: fill-animation linear forwards;
-    display: block; /* Alterado para iniciar visível */
+    display: block;
   }
   
   @keyframes fill-animation {
@@ -188,7 +188,7 @@
   
   optionsButton.addEventListener('click', () => {
     const rect = optionsButton.getBoundingClientRect();
-    const topPosition = rect.top + rect.height;
+    const topPosition = rect.top + rect.height + 10; // Ajustado para ficar um pouco mais abaixo
     const leftPosition = rect.left;
     optionsMenu.style.top = `${topPosition}px`;
     optionsMenu.style.left = `${leftPosition}px`;
