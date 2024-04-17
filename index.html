@@ -60,13 +60,14 @@
     border-radius: 50%;
     border: 5px solid #ccc; /* Cor cinza do loader */
     overflow: hidden;
+    display: none;
   }
 
   #loader::after {
     content: '';
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 0%;
     border-radius: 50%;
     background-color: #007bff; /* Cor azul do loader */
     animation: fillLoader linear infinite;
@@ -75,10 +76,10 @@
 
   @keyframes fillLoader {
     0% {
-      transform: scaleY(0);
+      height: 0%;
     }
     100% {
-      transform: scaleY(1);
+      height: 100%;
     }
   }
   
@@ -115,6 +116,7 @@
   
   let timer;
   let totalSeconds = 0;
+  let initialTotalSeconds = 0;
   
   function startTimer() {
     let startTime = Date.now();
@@ -143,7 +145,7 @@
   
   function resetTimer() {
     clearInterval(timer);
-    totalSeconds = 0;
+    totalSeconds = initialTotalSeconds;
     updateDisplay();
     updateLoader(); // Resetar o loader
     startButton.textContent = 'Iniciar';
@@ -174,10 +176,17 @@
   }
   
   function updateLoader() {
-    const percentage = (totalSeconds / 60) * 100; // Calcula a porcentagem de tempo restante
+    const percentage = (totalSeconds / initialTotalSeconds) * 100; // Calcula a porcentagem de tempo restante
     loader.style.display = 'block'; // Exibe o loader
-    loader.querySelector('::after').style.animationDuration = `${totalSeconds}s`; // Define a duração da animação
+    loader.querySelector('::after').style.animationDuration = `${initialTotalSeconds}s`; // Define a duração da animação
     loader.querySelector('::after').style.animationPlayState = 'running'; // Inicia a animação
+    if (percentage >= 80) {
+      loader.querySelector('::after').style.backgroundColor = '#00ff00'; // Verde
+    } else if (percentage >= 50) {
+      loader.querySelector('::after').style.backgroundColor = '#ffff00'; // Amarelo
+    } else {
+      loader.querySelector('::after').style.backgroundColor = '#ff0000'; // Vermelho
+    }
   }
   
   startButton.addEventListener('click', startTimer);
@@ -195,8 +204,8 @@
   const optionButtons = document.querySelectorAll('.option');
   optionButtons.forEach(button => {
     button.addEventListener('click', () => {
-      const time = parseInt(button.dataset.time);
-      totalSeconds = time;
+      initialTotalSeconds = parseInt(button.dataset.time);
+      totalSeconds = initialTotalSeconds;
       updateDisplay();
       updateLoader();
       optionsMenu.style.display = 'none';
