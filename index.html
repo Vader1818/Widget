@@ -24,7 +24,25 @@
   #timer {
     font-size: 3em;
     position: relative;
-    z-index: 2;
+    z-index: 1;
+  }
+  
+  .loader-ring {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 4px solid #ccc;
+    border-radius: 50%;
+    border-top-color: #666;
+    animation: spin 1s linear infinite;
+    top: calc(50% - 25px); /* Centralizar verticalmente */
+    left: calc(50% - 25px); /* Centralizar horizontalmente */
+    display: none; /* Inicialmente escondido */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
   
   .button {
@@ -41,11 +59,11 @@
   #options {
     display: none;
     position: absolute;
-    background-color: #333333; /* Fundo cinza mais escuro */
+    background-color: #333333;
     color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    z-index: 1;
+    z-index: 2;
   }
   
   .option {
@@ -60,6 +78,7 @@
 
 <div class="container">
   <div id="timer">00:00</div>
+  <div class="loader-ring"></div> <!-- Loader ring -->
   <button id="start" class="button">Iniciar</button>
   <button id="reset" class="button">Zerar</button>
   <button id="optionsBtn" class="button">Opções</button>
@@ -77,12 +96,14 @@
   const resetButton = document.getElementById('reset');
   const optionsButton = document.getElementById('optionsBtn');
   const optionsMenu = document.getElementById('options');
+  const loaderRing = document.querySelector('.loader-ring');
   
   let timer;
   let totalSeconds = 0;
   
   function startTimer() {
     let startTime = Date.now();
+    loaderRing.style.display = 'block'; // Exibir o loader ring ao iniciar o contador
     timer = setInterval(() => {
       const elapsedTime = Date.now() - startTime;
       totalSeconds = Math.max(totalSeconds - Math.floor(elapsedTime / 1000), 0);
@@ -90,6 +111,7 @@
       if (totalSeconds === 0) {
         clearInterval(timer);
         notify();
+        loaderRing.style.display = 'none'; // Esconder o loader ring ao finalizar o contador
       }
       startTime = Date.now();
     }, 1000);
@@ -112,6 +134,7 @@
     startButton.textContent = 'Iniciar';
     startButton.removeEventListener('click', pauseTimer);
     startButton.addEventListener('click', startTimer);
+    loaderRing.style.display = 'none'; // Esconder o loader ring ao resetar o contador
   }
   
   function updateDisplay() {
