@@ -52,6 +52,12 @@
     cursor: pointer;
     border-radius: 10px;
   }
+  
+  @media only screen and (max-width: 600px) {
+    #options {
+      width: 90%;
+    }
+  }
 </style>
 </head>
 <body>
@@ -121,14 +127,16 @@
   }
   
   function notify() {
-    if (Notification.permission === "granted") {
-      new Notification("Tempo esgotado!");
-    } else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-          new Notification("Tempo esgotado!");
-        }
-      });
+    if ('Notification' in window) {
+      if (Notification.permission === "granted") {
+        new Notification("Tempo esgotado!");
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            new Notification("Tempo esgotado!");
+          }
+        });
+      }
     }
   }
   
