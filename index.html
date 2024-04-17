@@ -53,6 +53,21 @@
     border-radius: 10px;
   }
   
+  #loader {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 5px solid #ccc; /* Cor cinza do loader */
+    border-top-color: #007bff; /* Cor azul do loader */
+    animation: spin 1s linear infinite;
+    display: none;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
   @media only screen and (max-width: 600px) {
     #options {
       width: 90%;
@@ -73,6 +88,7 @@
     <div class="option" data-time="600">10 minutos</div>
     <div class="option" data-time="3600">1 hora</div>
   </div>
+  <div id="loader"></div>
 </div>
 
 <script>
@@ -81,6 +97,7 @@
   const resetButton = document.getElementById('reset');
   const optionsButton = document.getElementById('optionsBtn');
   const optionsMenu = document.getElementById('options');
+  const loader = document.getElementById('loader');
   
   let timer;
   let totalSeconds = 0;
@@ -91,6 +108,7 @@
       const elapsedTime = Date.now() - startTime;
       totalSeconds = Math.max(totalSeconds - Math.floor(elapsedTime / 1000), 0);
       updateDisplay();
+      updateLoader(); // Atualiza o loader conforme o tempo
       if (totalSeconds === 0) {
         clearInterval(timer);
         notify();
@@ -138,6 +156,12 @@
         });
       }
     }
+  }
+  
+  function updateLoader() {
+    const percentage = (totalSeconds / 60) * 100; // Calcula a porcentagem de tempo restante
+    loader.style.display = 'block'; // Exibe o loader
+    loader.style.borderTopColor = `hsl(${percentage}, 100%, 50%)`; // Muda a cor do loader com base na porcentagem
   }
   
   startButton.addEventListener('click', startTimer);
