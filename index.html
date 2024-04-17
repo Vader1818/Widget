@@ -3,39 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relógio Digital LED</title>
+<title>Relógio Digital FlipClock</title>
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #222222;
-    color: #ffffff;
+    background-color: #222222; /* Cor de fundo preta */
+    color: #ffffff; /* Cor branco dos números */
     text-align: center;
     margin-top: 100px;
 }
 
-#clock {
-    font-size: 100px; /* Tamanho dos números do relógio (3x maior) */
-    font-family: "Arial, sans-serif; /* Fonte de estilo de LED */
-    letter-spacing: 30px; /* Espaçamento entre os números */
-    text-shadow: 0 0 20px #ffffff; /* Sombra verde para efeito de LED */
+.flip-clock {
+    display: inline-block;
+    margin: 0 auto;
+    font-size: 100px; /* Tamanho dos números do relógio */
+}
+
+.flip-clock .digit {
+    display: inline-block;
+    width: 120px; /* Largura de cada dígito */
+    overflow: hidden;
+    position: relative;
+}
+
+.flip-clock .digit .digit-inner {
+    height: 180px; /* Altura de cada dígito */
+    line-height: 180px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s;
+}
+
+.flip-clock .digit .upper {
+    transform: rotateX(0);
+}
+
+.flip-clock .digit .lower {
+    transform: rotateX(180deg);
+}
+
+.flip-clock .digit .lower .digit-inner {
+    transform: rotateX(180deg);
 }
 </style>
 </head>
 <body>
 
-<div id="clock"></div>
+<div class="flip-clock">
+    <div class="digit">
+        <div class="digit-inner upper" id="hourUpper">0</div>
+        <div class="digit-inner lower" id="hourLower">0</div>
+    </div>
+    <span>:</span>
+    <div class="digit">
+        <div class="digit-inner upper" id="minuteUpper">0</div>
+        <div class="digit-inner lower" id="minuteLower">0</div>
+    </div>
+</div>
 
 <script>
 function updateClock() {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
-    const timeString = `${pad(hours)}:${pad(minutes)}`;
-    document.getElementById('clock').textContent = timeString;
-}
 
-function pad(number) {
-    return (number < 10) ? '0' + number : number;
+    // Atualiza a parte superior e inferior dos dígitos das horas
+    document.getElementById('hourUpper').textContent = Math.floor(hours / 10);
+    document.getElementById('hourLower').textContent = hours % 10;
+
+    // Atualiza a parte superior e inferior dos dígitos dos minutos
+    document.getElementById('minuteUpper').textContent = Math.floor(minutes / 10);
+    document.getElementById('minuteLower').textContent = minutes % 10;
 }
 
 // Atualizar o relógio a cada segundo
