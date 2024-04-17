@@ -24,8 +24,7 @@
   #timer {
     font-size: 3em;
     position: relative;
-    z-index: 2;
-    cursor: pointer; /* Adicionado cursor pointer para indicar que é clicável */
+    z-index: 1; /* Alterado para colocar o cronômetro em primeiro plano */
   }
   
   .button {
@@ -46,7 +45,7 @@
     color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    z-index: 1;
+    z-index: 2; /* Alterado para colocar o menu de opções em segundo plano */
   }
   
   .option {
@@ -155,13 +154,6 @@
       updateDisplay();
       optionsMenu.style.display = 'none';
     });
-  });
-
-  // Adicionando evento de clique para mover o cronômetro para o canto da tela
-  timerDisplay.addEventListener('click', () => {
-    timerDisplay.style.position = 'fixed';
-    timerDisplay.style.top = '20px';
-    timerDisplay.style.right = '20px';
   });
 </script>
 
