@@ -1,108 +1,55 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cronômetro Tecnológico</title>
+<title>Relógio Sincronizado</title>
 <style>
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f0f0f0;
-    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
 }
 
 .container {
-    margin-top: 50px;
+    text-align: center;
+    margin-top: 100px;
 }
 
-#timer {
-    font-size: 36px;
+#clock {
+    font-size: 180px; /* Tamanho dos números do relógio */
     color: #333;
+    margin-bottom: 20px;
 }
 
-.buttons {
-    margin-top: 20px;
-}
-
-button {
-    background-color: #666;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    margin: 0 10px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-select {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 10px;
-}
 </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="timer">00:00</div>
-    <div class="buttons">
-        <button id="start">Iniciar</button>
-        <button id="pause">Pausar</button>
-        <button id="reset">Zerar</button>
-        <select id="selectTime">
-            <option value="1">1 minuto</option>
-            <option value="2">2 minutos</option>
-            <option value="5">5 minutos</option>
-            <option value="10">10 minutos</option>
-        </select>
-    </div>
+    <div id="clock">00:00:00</div>
 </div>
 
 <script>
-let timerInterval;
-let seconds = 0;
-let selectedTime = 1;
+const clockDisplay = document.getElementById('clock');
 
-function startTimer() {
-    timerInterval = setInterval(() => {
-        seconds++;
-        displayTime();
-    }, 1000);
+function updateClock() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    clockDisplay.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-function pauseTimer() {
-    clearInterval(timerInterval);
+function pad(number) {
+    return (number < 10) ? '0' + number : number;
 }
 
-function resetTimer() {
-    clearInterval(timerInterval);
-    seconds = 0;
-    displayTime();
-}
+// Atualizar o relógio a cada segundo
+setInterval(updateClock, 1000);
 
-function displayTime() {
-    const minutes = Math.floor(seconds / 60);
-    const remainderSeconds = seconds % 60;
-    const display = `${minutes < 10 ? '0' : ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
-    document.getElementById('timer').textContent = display;
-}
+// Atualizar o relógio imediatamente ao carregar a página
+updateClock();
 
-document.getElementById('start').addEventListener('click', startTimer);
-document.getElementById('pause').addEventListener('click', pauseTimer);
-document.getElementById('reset').addEventListener('click', resetTimer);
-
-document.getElementById('selectTime').addEventListener('change', function() {
-    selectedTime = parseInt(this.value);
-    seconds = selectedTime * 60;
-    displayTime();
-});
-
-displayTime();
 </script>
 
 </body>
