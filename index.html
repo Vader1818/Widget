@@ -25,6 +25,7 @@
     font-size: 3em;
     position: relative;
     z-index: 1;
+    margin-bottom: 20px; /* Adicionando margem abaixo do contador */
   }
   
   .loader-ring {
@@ -34,7 +35,7 @@
     border: 4px solid #ccc;
     border-radius: 50%;
     border-top-color: #00bfff; /* Cor inicial azul */
-    top: calc(50% - 75px); /* Posição acima do cronômetro */
+    bottom: calc(50% - 25px); /* Posição abaixo do cronômetro */
     left: calc(50% - 25px); /* Centralizar horizontalmente */
     display: none; /* Inicialmente escondido */
   }
@@ -49,6 +50,7 @@
     top: 4px;
     left: 4px;
     animation: fill-animation linear forwards; /* Animação de preenchimento */
+    display: none; /* Inicialmente escondido */
   }
   
   @keyframes fill-animation {
@@ -88,8 +90,9 @@
 <body>
 
 <div class="container">
-  <div class="loader-ring"></div> <!-- Loader ring -->
   <div id="timer">00:00</div>
+  <div class="loader-ring"></div> <!-- Loader ring -->
+  <div class="loader-fill"></div> <!-- Loader fill -->
   <button id="start" class="button">Iniciar</button>
   <button id="reset" class="button">Zerar</button>
   <button id="optionsBtn" class="button">Opções</button>
@@ -99,7 +102,6 @@
     <div class="option" data-time="600">10 minutos</div>
     <div class="option" data-time="3600">1 hora</div>
   </div>
-  <div class="loader-fill"></div> <!-- Loader fill -->
 </div>
 
 <script>
