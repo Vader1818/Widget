@@ -3,41 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relógio Sincronizado</title>
+<title>Relógio Digital</title>
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-}
-
-.container {
+    background-color: #333; /* Cor de fundo cinza */
+    color: white; /* Letras e números brancos */
     text-align: center;
     margin-top: 100px;
 }
 
 #clock {
-    font-size: 180px; /* Tamanho dos números do relógio */
-    color: #333;
+    font-size: 120px; /* Tamanho dos números do relógio (2x maior) */
     margin-bottom: 20px;
 }
-
 </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="clock">00:00:00</div>
-</div>
+<div id="clock"></div>
 
 <script>
-const clockDisplay = document.getElementById('clock');
-
 function updateClock() {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
-    clockDisplay.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    const timeString = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    document.getElementById('clock').textContent = timeString;
 }
 
 function pad(number) {
@@ -49,7 +42,6 @@ setInterval(updateClock, 1000);
 
 // Atualizar o relógio imediatamente ao carregar a página
 updateClock();
-
 </script>
 
 </body>
