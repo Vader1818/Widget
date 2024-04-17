@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relógio Digital</title>
+<title>Relógio Digital LED</title>
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #333; /* Cor de fundo cinza */
-    color: white; /* Letras e números brancos */
+    background-color: #000; /* Cor de fundo preta */
+    color: #0f0; /* Cor verde dos números */
     text-align: center;
     margin-top: 100px;
 }
 
 #clock {
-    font-size: 120px; /* Tamanho dos números do relógio (2x maior) */
-    margin-bottom: 20px;
+    font-size: 300px; /* Tamanho dos números do relógio (3x maior) */
+    font-family: "Courier New", monospace; /* Fonte de estilo de LED */
+    letter-spacing: 30px; /* Espaçamento entre os números */
+    text-shadow: 0 0 20px #0f0; /* Sombra verde para efeito de LED */
 }
 </style>
 </head>
@@ -28,8 +30,7 @@ function updateClock() {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-    const timeString = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    const timeString = `${pad(hours)}:${pad(minutes)}`;
     document.getElementById('clock').textContent = timeString;
 }
 
