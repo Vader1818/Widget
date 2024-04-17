@@ -21,11 +21,14 @@
     height: 100vh;
   }
   
+  #timer-container {
+    position: relative; /* Adicionando posição relativa para poder posicionar o loader ring */
+    margin-bottom: 20px; /* Adicionando margem abaixo do contador */
+  }
+  
   #timer {
     font-size: 3em;
-    position: relative;
     z-index: 1;
-    margin-bottom: 20px; /* Adicionando margem abaixo do contador */
   }
   
   .loader-ring {
@@ -35,9 +38,10 @@
     border: 4px solid #ccc;
     border-radius: 50%;
     border-top-color: #00bfff; /* Cor inicial azul */
-    bottom: calc(50% - 25px); /* Posição abaixo do cronômetro */
+    top: calc(50% - 75px); /* Posição acima do cronômetro */
     left: calc(50% - 25px); /* Centralizar horizontalmente */
     display: none; /* Inicialmente escondido */
+    z-index: 2; /* Colocando acima do contador */
   }
   
   .loader-fill {
@@ -90,9 +94,11 @@
 <body>
 
 <div class="container">
-  <div id="timer">00:00</div>
-  <div class="loader-ring"></div> <!-- Loader ring -->
-  <div class="loader-fill"></div> <!-- Loader fill -->
+  <div id="timer-container">
+    <div id="timer">00:00</div>
+    <div class="loader-ring"></div> <!-- Loader ring -->
+    <div class="loader-fill"></div> <!-- Loader fill -->
+  </div>
   <button id="start" class="button">Iniciar</button>
   <button id="reset" class="button">Zerar</button>
   <button id="optionsBtn" class="button">Opções</button>
