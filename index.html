@@ -38,10 +38,10 @@
     border: 4px solid #ccc;
     border-radius: 50%;
     border-top-color: #00bfff;
-    top: calc(50% - 75px); /* Ajustado para ficar mais abaixo */
+    top: calc(50% - 25px); /* Corrigido para ficar centrado */
     left: calc(50% - 25px);
     display: block;
-    z-index: 2;
+    z-index: 0; /* Alterado para aparecer atrás do timer */
   }
   
   .loader-fill {
@@ -55,6 +55,7 @@
     left: 4px;
     animation: fill-animation linear forwards;
     display: block;
+    z-index: 1; /* Alterado para aparecer em cima do ring */
   }
   
   @keyframes fill-animation {
@@ -188,7 +189,7 @@
   
   optionsButton.addEventListener('click', () => {
     const rect = optionsButton.getBoundingClientRect();
-    const topPosition = rect.top + rect.height + 10; // Ajustado para ficar um pouco mais abaixo
+    const topPosition = rect.top + rect.height + 10;
     const leftPosition = rect.left;
     optionsMenu.style.top = `${topPosition}px`;
     optionsMenu.style.left = `${leftPosition}px`;
