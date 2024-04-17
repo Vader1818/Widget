@@ -23,6 +23,8 @@
   
   #timer {
     font-size: 3em;
+    position: relative;
+    z-index: 1;
   }
   
   .button {
@@ -43,7 +45,7 @@
     color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    z-index: 2;
+    z-index: 2; /* Define a frente dos números do contador */
   }
   
   .option {
@@ -193,7 +195,7 @@
   resetButton.addEventListener('click', resetTimer);
   
   optionsButton.addEventListener('click', () => {
-    const rect = optionsButton.getBoundingClientRect();
+    const rect = timerDisplay.getBoundingClientRect(); // Obtém as dimensões do contador
     const topPosition = rect.top + rect.height + 10;
     const leftPosition = rect.left;
     optionsMenu.style.top = `${topPosition}px`;
