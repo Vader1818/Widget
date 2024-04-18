@@ -35,7 +35,7 @@
         border: 10px solid transparent;
         border-top-color: #3498db;
         border-radius: 50%;
-        animation: carregar 1s linear forwards;
+        animation: carregar linear forwards; /* Ajuste aqui */
         z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
         border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
     }
@@ -125,7 +125,7 @@
             }, 1000);
             emExecucao = true;
             document.getElementById('iniciarPausar').textContent = 'Pausar';
-            document.getElementById('animação-carga').style.animationPlayState = 'running';
+            document.getElementById('animação-carga').style.animation = 'carregar linear forwards'; // Ajuste aqui
         }
     }
 
