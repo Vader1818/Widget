@@ -23,12 +23,12 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 2; /* Ajusta o z-index para garantir que o número do temporizador apareça acima do anel de carregamento */
+        z-index: 2;
     }
     .animação-carga {
         position: absolute;
-        width: calc(100% - 20px); /* Ajusta a largura para compensar a largura da borda */
-        height: calc(100% - 20px); /* Ajusta a altura para compensar a largura da borda */
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -36,8 +36,8 @@
         border-top-color: #3498db;
         border-radius: 50%;
         animation: carregar 1s linear forwards;
-        z-index: 1; /* Ajusta o z-index para garantir que o anel de carregamento esteja atrás do número do temporizador */
-        border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
+        z-index: 1;
+        border: 10px solid #444444;
     }
     @keyframes carregar {
         from {
@@ -62,7 +62,7 @@
         top: 50px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: rgba(34, 34, 34, 0.7);
+        background-color: rgba(34, 34, 34, 0.8); /* Opacidade definida para 80% */
         padding: 10px;
         border-radius: 5px;
     }
