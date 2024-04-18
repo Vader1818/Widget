@@ -23,18 +23,20 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 1; /* Garante que o número do temporizador apareça acima do anel de carregamento */
+        z-index: 2; /* Ajusta o z-index para garantir que o número do temporizador apareça acima do anel de carregamento */
     }
     .animação-carga {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        width: calc(100% - 20px); /* Ajusta a largura para compensar a largura da borda */
+        height: calc(100% - 20px); /* Ajusta a altura para compensar a largura da borda */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         border: 10px solid transparent;
         border-top-color: #3498db;
         border-radius: 50%;
-        animation: carregar 1s linear forwards; /* Usando forwards para manter o preenchimento total quando o tempo atingir 0 */
-        z-index: 0; /* Coloca o anel de carregamento atrás do número do temporizador */
-        animation-play-state: paused; /* Inicia a animação pausada */
+        animation: carregar 1s linear forwards;
+        z-index: 1; /* Ajusta o z-index para garantir que o anel de carregamento esteja atrás do número do temporizador */
         border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
     }
     @keyframes carregar {
@@ -101,7 +103,7 @@
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
         const carga = document.getElementById('animação-carga');
-        carga.style.animationDuration = `${tempoAtual}s`; // Define a duração da animação baseada no tempo atual
+        carga.style.animationDuration = `${tempoAtual}s`;
     }
 
     function iniciarPausarTempo() {
@@ -122,7 +124,7 @@
             }, 1000);
             emExecucao = true;
             document.getElementById('iniciarPausar').textContent = 'Pausar';
-            document.getElementById('animação-carga').style.animationPlayState = 'running'; // Inicia a animação de carregamento
+            document.getElementById('animação-carga').style.animationPlayState = 'running';
         }
     }
 
@@ -132,7 +134,7 @@
         emExecucao = false;
         atualizarTempo();
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
-        document.getElementById('animação-carga').style.animation = ''; // Pára a animação de carregamento
+        document.getElementById('animação-carga').style.animation = '';
     }
 
     function toggleOpcoes() {
