@@ -25,16 +25,36 @@
         transform: translate(-50%, -50%);
         z-index: 2;
     }
-    .animação-carga {
+    .progresso {
         position: absolute;
-        width: calc(100% - 20px); /* Ajusta a largura para compensar a largura da borda */
-        height: calc(100% - 20px); /* Ajusta a altura para compensar a largura da borda */
+        width: 160px;
+        height: 160px;
+        clip: rect(0, 160px, 160px, 80px);
+        border-radius: 50%;
+        background-color: #222222;
+        z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
+    }
+    .progresso > .círculo {
+        width: 100%;
+        height: 100%;
+        clip: rect(0, 80px, 160px, 0);
+        border-radius: 50%;
+        background-color: #3498db;
+        transform: rotate(0deg);
+        z-index: 1; /* Define o z-index para ficar na frente do anel */
+    }
+    .progresso > .máscara {
+        width: 50%;
+        height: 100%;
+        clip: rect(0, 40px, 160px, 0);
+        border-radius: 50%;
+        background-color: #222222;
+        z-index: 2; /* Define o z-index para ficar na frente do anel */
+    }
+    .progresso > .círculo, .progresso > .máscara {
+        position: absolute;
         top: 0;
         left: 0;
-        border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
-        border-radius: 50%;
-        z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
-        background: conic-gradient(from -90deg, #3498db 0%, #444444 0%);
     }
     button {
         background-color: #222222;
@@ -65,7 +85,10 @@
 <body>
 <div id="temporizador-container">
     <div id="temporizador">00:00:00</div>
-    <div class="animação-carga" id="animação-carga"></div>
+    <div class="progresso">
+        <div class="círculo"></div>
+        <div class="máscara"></div>
+    </div>
 </div>
 <button id="iniciarPausar" onclick="iniciarPausarTempo()">Iniciar</button>
 <button id="zerar" onclick="zerarTempo()">Zerar</button>
@@ -93,9 +116,9 @@
 
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
-        const carga = document.getElementById('animação-carga');
-        const percentual = ((tempoInicial - tempoAtual) / tempoInicial) * 100;
-        carga.style.background = `conic-gradient(from -90deg, #3498db ${percentual}%, #444444 ${percentual}% 100%)`;
+        const círculo = document.querySelector('.círculo');
+        const graus = ((tempoInicial - tempoAtual) / tempoInicial) * 360;
+        círculo.style.transform = `rotate(${graus}deg)`;
     }
 
     function iniciarPausarTempo() {
