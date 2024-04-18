@@ -25,6 +25,20 @@
         transform: translate(-50%, -50%);
         z-index: 2;
     }
+    #progresso {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        clip: rect(0, 200px, 200px, 100px); /* Define a forma circular */
+        border-radius: 50%;
+    }
+    #progresso .progresso-animado {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        clip: rect(0, 100px, 200px, 0); /* Define a metade inferior da forma circular */
+        border-radius: 50%;
+    }
     button {
         background-color: #222222;
         color: white;
@@ -53,6 +67,9 @@
 </head>
 <body>
 <div id="temporizador-container">
+    <div id="progresso">
+        <div class="progresso-animado" style="background-color: #007bff;"></div>
+    </div>
     <div id="temporizador">00:00:00</div>
 </div>
 <button id="iniciarPausar" onclick="iniciarPausarTempo()">Iniciar</button>
@@ -92,6 +109,7 @@
                 if (tempoAtual > 0) {
                     tempoAtual--;
                     atualizarTempo();
+                    atualizarProgresso();
                 } else {
                     clearInterval(temporizador);
                     emExecucao = false;
@@ -108,6 +126,7 @@
         tempoAtual = 0;
         emExecucao = false;
         atualizarTempo();
+        atualizarProgresso();
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
     }
 
@@ -125,7 +144,14 @@
     function setTempo(tempo) {
         tempoAtual = tempo;
         atualizarTempo();
+        atualizarProgresso();
         toggleOpcoes();
+    }
+
+    function atualizarProgresso() {
+        const progresso = document.querySelector('.progresso-animado');
+        const percentual = (tempoAtual / tempoTotal) * 100;
+        progresso.style.transform = `rotate(${percentual * 1.8}deg)`; // 1.8 = 180° / 100%
     }
 </script>
 </body>
