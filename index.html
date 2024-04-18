@@ -58,6 +58,7 @@
 <button id="iniciarPausar" onclick="iniciarPausarTempo()">Iniciar</button>
 <button id="zerar" onclick="zerarTempo()">Zerar</button>
 <button id="opcoes" onclick="toggleOpcoes()">Opções</button>
+<button id="fixar" onclick="fixarCronometro()">Fixar Cronômetro</button>
 <div id="opcoesMenu">
     <button class="opcao" onclick="setTempo(10)">10 segundos</button>
     <button class="opcao" onclick="setTempo(60)">1 minuto</button>
@@ -70,6 +71,7 @@
     let temporizador;
     let tempoAtual = 0;
     let emExecucao = false;
+    let fixarAtivo = false;
 
     function formatarTempo(segundos) {
         const horas = Math.floor(segundos / 3600);
@@ -92,6 +94,9 @@
                 if (tempoAtual > 0) {
                     tempoAtual--;
                     atualizarTempo();
+                    if (fixarAtivo) {
+                        fixarCronometro();
+                    }
                 } else {
                     clearInterval(temporizador);
                     emExecucao = false;
@@ -109,6 +114,9 @@
         emExecucao = false;
         atualizarTempo();
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
+        if (fixarAtivo) {
+            fixarCronometro();
+        }
     }
 
     function toggleOpcoes() {
@@ -126,6 +134,21 @@
         tempoAtual = tempo;
         atualizarTempo();
         toggleOpcoes();
+    }
+
+    function fixarCronometro() {
+        const temporizadorContainer = document.getElementById('temporizador-container');
+        if (!fixarAtivo) {
+            temporizadorContainer.style.position = 'fixed';
+            temporizadorContainer.style.top = '10px';
+            temporizadorContainer.style.right = '10px';
+            fixarAtivo = true;
+        } else {
+            temporizadorContainer.style.position = 'relative';
+            temporizadorContainer.style.top = 'auto';
+            temporizadorContainer.style.right = 'auto';
+            fixarAtivo = false;
+        }
     }
 </script>
 </body>
