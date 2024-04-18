@@ -11,9 +11,33 @@
         color: white;
         text-align: center;
     }
+    #temporizador-container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin: 20px auto;
+    }
     #temporizador {
         font-size: 3em;
-        margin-bottom: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .animação-carga {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 10px solid transparent;
+        border-top-color: #3498db;
+        border-radius: 50%;
+        animation: girar 1s linear infinite;
+        animation-play-state: paused;
+    }
+    @keyframes girar {
+        to {
+            transform: rotate(360deg);
+        }
     }
     button {
         background-color: #222222;
@@ -41,7 +65,10 @@
 </style>
 </head>
 <body>
-<div id="temporizador">00:00:00</div>
+<div id="temporizador-container">
+    <div id="temporizador">00:00:00</div>
+    <div class="animação-carga" id="animação-carga"></div>
+</div>
 <button id="iniciarPausar" onclick="iniciarPausarTempo()">Iniciar</button>
 <button id="zerar" onclick="zerarTempo()">Zerar</button>
 <button id="opcoes" onclick="toggleOpcoes()">Opções</button>
@@ -67,6 +94,9 @@
 
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
+        const carga = document.getElementById('animação-carga');
+        carga.style.animationPlayState = 'running';
+        carga.style.animationDuration = `${tempoAtual}s`;
     }
 
     function iniciarPausarTempo() {
