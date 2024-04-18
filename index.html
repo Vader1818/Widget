@@ -25,36 +25,16 @@
         transform: translate(-50%, -50%);
         z-index: 2;
     }
-    .progresso {
+    .animação-carga {
         position: absolute;
-        width: 160px;
-        height: 160px;
-        clip: rect(0, 160px, 160px, 80px);
-        border-radius: 50%;
-        background-color: #222222;
-        z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
-    }
-    .progresso > .círculo {
-        width: 100%;
-        height: 100%;
-        clip: rect(0, 80px, 160px, 0);
-        border-radius: 50%;
-        background-color: #3498db;
-        transform: rotate(0deg);
-        z-index: 1; /* Define o z-index para ficar na frente do anel */
-    }
-    .progresso > .máscara {
-        width: 50%;
-        height: 100%;
-        clip: rect(0, 40px, 160px, 0);
-        border-radius: 50%;
-        background-color: #222222;
-        z-index: 2; /* Define o z-index para ficar na frente do anel */
-    }
-    .progresso > .círculo, .progresso > .máscara {
-        position: absolute;
+        width: calc(100% - 20px); /* Ajusta a largura para compensar a largura da borda */
+        height: calc(100% - 20px); /* Ajusta a altura para compensar a largura da borda */
         top: 0;
         left: 0;
+        border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
+        border-radius: 50%;
+        z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
+        background: conic-gradient(from -90deg, #444444, #3498db); /* Gradiente de cinza para azul */
     }
     button {
         background-color: #222222;
@@ -84,18 +64,8 @@
 </head>
 <body>
 <div id="temporizador-container">
-    <svg width="200px" height="200px" viewBox="0 0 42 42" class="donut">
-        <circle id="c1" cx="21" cy="21" r="15.91549430918954" stroke-dasharray="100 0" stroke-dashoffset="100"></circle>
-        <circle id="c2" cx="21" cy="21" r="15.91549430918954" stroke-dasharray="0 100" stroke-dashoffset="0"></circle>
-        <g class="chart-text">
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" id="counterText">5</text>
-        </g>
-    </svg>
     <div id="temporizador">00:00:00</div>
-    <div class="progresso">
-        <div class="círculo"></div>
-        <div class="máscara"></div>
-    </div>
+    <div class="animação-carga" id="animação-carga"></div>
 </div>
 <button id="iniciarPausar" onclick="iniciarPausarTempo()">Iniciar</button>
 <button id="zerar" onclick="zerarTempo()">Zerar</button>
@@ -112,7 +82,6 @@
     let temporizador;
     let tempoAtual = 0;
     let emExecucao = false;
-    let tempoInicial = 0;
 
     function formatarTempo(segundos) {
         const horas = Math.floor(segundos / 3600);
@@ -123,9 +92,9 @@
 
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
-        const círculo = document.querySelector('.círculo');
-        const graus = ((tempoInicial - tempoAtual) / tempoInicial) * 360;
-        círculo.style.transform = `rotate(${graus}deg)`;
+        const carga = document.getElementById('animação-carga');
+        const percentual = (tempoAtual / tempoInicial) * 100;
+        carga.style.background = `conic-gradient(from -90deg, #444444 ${percentual}%, #3498db ${percentual}% 100%)`;
     }
 
     function iniciarPausarTempo() {
