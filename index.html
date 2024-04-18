@@ -1,218 +1,107 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Temporizador</title>
 <style>
-  body {
-    background-color: #222222;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  
-  .container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
-  #timer {
-    font-size: 3em;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .button {
-    background-color: #222222;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 20px;
-    margin: 5px;
-  }
-  
-  #options {
-    display: none;
-    position: absolute;
-    background-color: rgba(51, 51, 51, 0.7); /* Cor do fundo com 70% de opacidade */
-    color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 2; /* Define a frente dos números do temporizador */
-  }
-  
-  .option {
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-  
-  #loader {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 5px solid #ccc; /* Cor cinza do loader */
-    overflow: hidden;
-    display: none;
-  }
-
-  #loader::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #007bff; /* Cor azul do loader */
-    animation: fillLoader linear infinite;
-    transform-origin: center center;
-  }
-
-  @keyframes fillLoader {
-    0% {
-      transform: scale(0);
+    body {
+        background-color: #222222;
+        font-family: Arial, sans-serif;
+        color: white;
+        text-align: center;
     }
-    100% {
-      transform: scale(1);
+    #temporizador {
+        font-size: 3em;
+        margin-bottom: 20px;
     }
-  }
-  
-  @media only screen and (max-width: 600px) {
-    #options {
-      width: 90%;
+    button {
+        background-color: #222222;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 0 10px;
+        cursor: pointer;
     }
-  }
+    #opcoesMenu {
+        display: none;
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(34, 34, 34, 0.7);
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .opcao {
+        display: block;
+        margin-bottom: 10px;
+    }
 </style>
 </head>
 <body>
-
-<div class="container">
-  <div id="timer">00:00</div>
-  <button id="start" class="button">Iniciar</button>
-  <button id="reset" class="button">Zerar</button>
-  <button id="optionsBtn" class="button">Opções</button>
-  <div id="options">
-    <div class="option" data-time="10">10 segundos</div>
-    <div class="option" data-time="60">1 minuto</div>
-    <div class="option" data-time="600">10 minutos</div>
-    <div class="option" data-time="3600">1 hora</div>
-  </div>
-  <div id="loader"></div>
+<div id="temporizador">00:00:00</div>
+<button id="iniciarPausar" onclick="iniciarPausarTempo()">Iniciar</button>
+<button id="zerar" onclick="zerarTempo()">Zerar</button>
+<button id="opcoes" onclick="toggleOpcoes()">Opções</button>
+<div id="opcoesMenu">
+    <button class="opcao" onclick="setTempo(10)">10 segundos</button>
+    <button class="opcao" onclick="setTempo(60)">1 minuto</button>
+    <button class="opcao" onclick="setTempo(600)">10 minutos</button>
+    <button class="opcao" onclick="setTempo(1800)">30 minutos</button>
+    <button class="opcao" onclick="setTempo(3600)">1 hora</button>
 </div>
 
 <script>
-  const timerDisplay = document.getElementById('timer');
-  const startButton = document.getElementById('start');
-  const resetButton = document.getElementById('reset');
-  const optionsButton = document.getElementById('optionsBtn');
-  const optionsMenu = document.getElementById('options');
-  const loader = document.getElementById('loader');
-  
-  let timer;
-  let totalSeconds = 0;
-  let initialTotalSeconds = 0;
-  
-  function startTimer() {
-    let startTime = Date.now();
-    timer = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      totalSeconds = Math.max(totalSeconds - Math.floor(elapsedTime / 1000), 0);
-      updateDisplay();
-      updateLoader(); // Atualiza o loader conforme o tempo
-      if (totalSeconds === 0) {
-        clearInterval(timer);
-        notify();
-      }
-      startTime = Date.now();
-    }, 1000);
-    startButton.textContent = 'Pausar';
-    startButton.removeEventListener('click', startTimer);
-    startButton.addEventListener('click', pauseTimer);
-  }
-  
-  function pauseTimer() {
-    clearInterval(timer);
-    startButton.textContent = 'Continuar';
-    startButton.removeEventListener('click', pauseTimer);
-    startButton.addEventListener('click', startTimer);
-  }
-  
-  function resetTimer() {
-    clearInterval(timer);
-    totalSeconds = initialTotalSeconds;
-    updateDisplay();
-    updateLoader(); // Resetar o loader
-    startButton.textContent = 'Iniciar';
-    startButton.removeEventListener('click', pauseTimer);
-    startButton.addEventListener('click', startTimer);
-  }
-  
-  function updateDisplay() {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
-    timerDisplay.textContent = `${displayMinutes}:${displaySeconds}`;
-  }
-  
-  function notify() {
-    if ('Notification' in window) {
-      if (Notification.permission === "granted") {
-        new Notification("Tempo esgotado!");
-      } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then(permission => {
-          if (permission === "granted") {
-            new Notification("Tempo esgotado!");
-          }
-        });
-      }
-    }
-  }
-  
-  function updateLoader() {
-    const percentage = (totalSeconds / initialTotalSeconds) * 100; // Calcula a porcentagem de tempo restante
-    loader.style.display = 'block'; // Exibe o loader
-    loader.querySelector('#loader::after').style.animationDuration = `${initialTotalSeconds}s`; // Define a duração da animação
-    if (percentage >= 80) {
-      loader.querySelector('#loader::after').style.backgroundColor = '#00ff00'; // Verde
-    } else if (percentage >= 50) {
-      loader.querySelector('#loader::after').style.backgroundColor = '#ffff00'; // Amarelo
-    } else {
-      loader.querySelector('#loader::after').style.backgroundColor = '#ff0000'; // Vermelho
-    }
-  }
-  
-  startButton.addEventListener('click', startTimer);
-  resetButton.addEventListener('click', resetTimer);
-  
-  optionsButton.addEventListener('click', () => {
-    const rect = timerDisplay.getBoundingClientRect(); // Obtém as dimensões do temporizador
-    const topPosition = rect.top + rect.height + 10;
-    const leftPosition = rect.left;
-    optionsMenu.style.top = `${topPosition}px`;
-    optionsMenu.style.left = `${leftPosition}px`;
-    optionsMenu.style.display = optionsMenu.style.display === 'none' ? 'block' : 'none';
-  });
-  
-  const optionButtons = document.querySelectorAll('.option');
-  optionButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      initialTotalSeconds = parseInt(button.dataset.time);
-      totalSeconds = initialTotalSeconds;
-      updateDisplay();
-      updateLoader();
-      optionsMenu.style.display = 'none'; // Fecha a aba de opções ao selecionar uma opção de tempo
-    });
-  });
-</script>
+    let temporizador;
+    let tempoAtual = 0;
+    let emExecucao = false;
 
+    function formatarTempo(segundos) {
+        const horas = Math.floor(segundos / 3600);
+        const minutos = Math.floor((segundos % 3600) / 60);
+        const segundosRestantes = segundos % 60;
+        return `${horas < 10 ? '0' : ''}${horas}:${minutos < 10 ? '0' : ''}${minutos}:${segundosRestantes < 10 ? '0' : ''}${segundosRestantes}`;
+    }
+
+    function atualizarTempo() {
+        document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
+    }
+
+    function iniciarPausarTempo() {
+        if (emExecucao) {
+            clearInterval(temporizador);
+            emExecucao = false;
+            document.getElementById('iniciarPausar').textContent = 'Iniciar';
+        } else {
+            temporizador = setInterval(() => {
+                tempoAtual++;
+                atualizarTempo();
+            }, 1000);
+            emExecucao = true;
+            document.getElementById('iniciarPausar').textContent = 'Pausar';
+        }
+    }
+
+    function zerarTempo() {
+        clearInterval(temporizador);
+        tempoAtual = 0;
+        emExecucao = false;
+        atualizarTempo();
+        document.getElementById('iniciarPausar').textContent = 'Iniciar';
+    }
+
+    function toggleOpcoes() {
+        const opcoesMenu = document.getElementById('opcoesMenu');
+        opcoesMenu.style.display = opcoesMenu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function setTempo(tempo) {
+        tempoAtual = tempo;
+        atualizarTempo();
+        toggleOpcoes();
+    }
+</script>
 </body>
 </html>
