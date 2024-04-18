@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -180,14 +180,14 @@
   function updateLoader() {
     const percentage = (totalSeconds / initialTotalSeconds) * 100; // Calcula a porcentagem de tempo restante
     loader.style.display = 'block'; // Exibe o loader
-    loader.querySelector('::after').style.animationDuration = `${initialTotalSeconds}s`; // Define a duração da animação
-    loader.querySelector('::after').style.animationPlayState = 'running'; // Inicia a animação
+    loader.querySelector('#loader::after').style.animationDuration = `${initialTotalSeconds}s`; // Define a duração da animação
+    loader.querySelector('#loader::after').style.animationPlayState = 'running'; // Inicia a animação
     if (percentage >= 80) {
-      loader.querySelector('::after').style.backgroundColor = '#00ff00'; // Verde
+      loader.querySelector('#loader::after').style.backgroundColor = '#00ff00'; // Verde
     } else if (percentage >= 50) {
-      loader.querySelector('::after').style.backgroundColor = '#ffff00'; // Amarelo
+      loader.querySelector('#loader::after').style.backgroundColor = '#ffff00'; // Amarelo
     } else {
-      loader.querySelector('::after').style.backgroundColor = '#ff0000'; // Vermelho
+      loader.querySelector('#loader::after').style.backgroundColor = '#ff0000'; // Vermelho
     }
   }
   
