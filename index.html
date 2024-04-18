@@ -54,10 +54,12 @@
 </div>
 
 <script>
+    // Variáveis globais
     let temporizador;
     let tempoAtual = 0;
     let emExecucao = false;
 
+    // Funções para manipulação do temporizador
     function formatarTempo(segundos) {
         const horas = Math.floor(segundos / 3600);
         const minutos = Math.floor((segundos % 3600) / 60);
@@ -83,6 +85,17 @@
                     clearInterval(temporizador);
                     emExecucao = false;
                     document.getElementById('iniciarPausar').textContent = 'Iniciar';
+                    // Lançar notificação quando o tempo acabar
+                    if ('Notification' in window) {
+                        Notification.requestPermission().then(function (permission) {
+                            if (permission === "granted") {
+                                new Notification('Tempo acabou!', {
+                                    body: 'O temporizador chegou a zero.',
+                                    icon: 'icon.png'
+                                });
+                            }
+                        });
+                    }
                 }
             }, 1000);
             emExecucao = true;
@@ -98,6 +111,7 @@
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
     }
 
+    // Funções para manipulação do menu de opções
     function toggleOpcoes() {
         const opcoesMenu = document.getElementById('opcoesMenu');
         opcoesMenu.style.display = opcoesMenu.style.display === 'block' ? 'none' : 'block';
