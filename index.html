@@ -27,8 +27,8 @@
     }
     .animação-carga {
         position: absolute;
-        width: calc(100% - 20px);
-        height: calc(100% - 20px);
+        width: calc(100% - 20px); /* Ajusta a largura para compensar a largura da borda */
+        height: calc(100% - 20px); /* Ajusta a altura para compensar a largura da borda */
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -36,8 +36,8 @@
         border-top-color: #3498db;
         border-radius: 50%;
         animation: carregar 1s linear forwards;
-        z-index: 1;
-        border: 10px solid #444444;
+        z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
+        border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
     }
     @keyframes carregar {
         from {
