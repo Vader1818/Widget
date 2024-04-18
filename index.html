@@ -76,8 +76,14 @@
             document.getElementById('iniciarPausar').textContent = 'Iniciar';
         } else {
             temporizador = setInterval(() => {
-                tempoAtual++;
-                atualizarTempo();
+                if (tempoAtual > 0) {
+                    tempoAtual--;
+                    atualizarTempo();
+                } else {
+                    clearInterval(temporizador);
+                    emExecucao = false;
+                    document.getElementById('iniciarPausar').textContent = 'Iniciar';
+                }
             }, 1000);
             emExecucao = true;
             document.getElementById('iniciarPausar').textContent = 'Pausar';
