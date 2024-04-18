@@ -35,7 +35,7 @@
         border: 10px solid transparent;
         border-top-color: #3498db;
         border-radius: 50%;
-        animation: carregar linear forwards; /* Ajuste aqui */
+        animation: carregar linear forwards;
         z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
         border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
     }
@@ -125,7 +125,8 @@
             }, 1000);
             emExecucao = true;
             document.getElementById('iniciarPausar').textContent = 'Pausar';
-            document.getElementById('animação-carga').style.animation = 'carregar linear forwards'; // Ajuste aqui
+            document.getElementById('animação-carga').style.animation = 'carregar linear forwards';
+            document.getElementById('animação-carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
         }
     }
 
@@ -136,6 +137,7 @@
         atualizarTempo();
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
         document.getElementById('animação-carga').style.animation = '';
+        document.getElementById('animação-carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
     }
 
     function toggleOpcoes() {
