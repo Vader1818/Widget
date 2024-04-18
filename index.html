@@ -38,6 +38,7 @@
         height: 100%;
         clip: rect(0, 100px, 200px, 0); /* Define a metade inferior da forma circular */
         border-radius: 50%;
+        background: conic-gradient(#007bff 0%, #00fffb 100%); /* Gradiente de azul */
     }
     button {
         background-color: #222222;
@@ -68,7 +69,7 @@
 <body>
 <div id="temporizador-container">
     <div id="progresso">
-        <div class="progresso-animado" style="background-color: #007bff;"></div>
+        <div class="progresso-animado"></div>
     </div>
     <div id="temporizador">00:00:00</div>
 </div>
@@ -87,6 +88,7 @@
     let temporizador;
     let tempoAtual = 0;
     let emExecucao = false;
+    const tempoTotal = 3600;
 
     function formatarTempo(segundos) {
         const horas = Math.floor(segundos / 3600);
