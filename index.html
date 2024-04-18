@@ -25,7 +25,7 @@
         transform: translate(-50%, -50%);
         z-index: 2;
     }
-    .animação-carga {
+    .carga {
         position: absolute;
         width: calc(100% - 20px); /* Ajusta a largura para compensar a largura da borda */
         height: calc(100% - 20px); /* Ajusta a altura para compensar a largura da borda */
@@ -76,7 +76,7 @@
 <body>
 <div id="temporizador-container">
     <div id="temporizador">00:00:00</div>
-    <div class="animação-carga" id="animação-carga"></div>
+    <div class="carga" id="carga"></div>
 </div>
 <button id="iniciarPausar" onclick="iniciarPausarTempo()">Iniciar</button>
 <button id="zerar" onclick="zerarTempo()">Zerar</button>
@@ -103,7 +103,7 @@
 
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
-        const carga = document.getElementById('animação-carga');
+        const carga = document.getElementById('carga');
         carga.style.animationDuration = `${tempoAtual}s`;
     }
 
@@ -125,8 +125,8 @@
             }, 1000);
             emExecucao = true;
             document.getElementById('iniciarPausar').textContent = 'Pausar';
-            document.getElementById('animação-carga').style.animation = 'carregar linear forwards';
-            document.getElementById('animação-carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
+            document.getElementById('carga').style.animation = 'carregar linear forwards';
+            document.getElementById('carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
         }
     }
 
@@ -136,8 +136,8 @@
         emExecucao = false;
         atualizarTempo();
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
-        document.getElementById('animação-carga').style.animation = '';
-        document.getElementById('animação-carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
+        document.getElementById('carga').style.animation = '';
+        document.getElementById('carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
     }
 
     function toggleOpcoes() {
