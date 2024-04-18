@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cronômetro</title>
+<title>Temporizador</title>
 <style>
   body {
     background-color: #222222;
@@ -45,7 +45,7 @@
     color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    z-index: 2; /* Define a frente dos números do contador */
+    z-index: 2; /* Define a frente dos números do temporizador */
   }
   
   .option {
@@ -69,19 +69,19 @@
     content: '';
     position: absolute;
     width: 100%;
-    height: 0%;
+    height: 100%;
     border-radius: 50%;
     background-color: #007bff; /* Cor azul do loader */
     animation: fillLoader linear infinite;
-    animation-play-state: paused;
+    transform-origin: center center;
   }
 
   @keyframes fillLoader {
     0% {
-      height: 0%;
+      transform: scale(0);
     }
     100% {
-      height: 100%;
+      transform: scale(1);
     }
   }
   
@@ -181,7 +181,6 @@
     const percentage = (totalSeconds / initialTotalSeconds) * 100; // Calcula a porcentagem de tempo restante
     loader.style.display = 'block'; // Exibe o loader
     loader.querySelector('#loader::after').style.animationDuration = `${initialTotalSeconds}s`; // Define a duração da animação
-    loader.querySelector('#loader::after').style.animationPlayState = 'running'; // Inicia a animação
     if (percentage >= 80) {
       loader.querySelector('#loader::after').style.backgroundColor = '#00ff00'; // Verde
     } else if (percentage >= 50) {
@@ -195,7 +194,7 @@
   resetButton.addEventListener('click', resetTimer);
   
   optionsButton.addEventListener('click', () => {
-    const rect = timerDisplay.getBoundingClientRect(); // Obtém as dimensões do contador
+    const rect = timerDisplay.getBoundingClientRect(); // Obtém as dimensões do temporizador
     const topPosition = rect.top + rect.height + 10;
     const leftPosition = rect.left;
     optionsMenu.style.top = `${topPosition}px`;
