@@ -23,6 +23,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        z-index: 1; /* Garante que o número do temporizador apareça acima do anel de carregamento */
     }
     .animação-carga {
         position: absolute;
@@ -33,6 +34,7 @@
         border-radius: 50%;
         animation: girar 1s linear infinite;
         animation-play-state: paused;
+        z-index: 0; /* Coloca o anel de carregamento atrás do número do temporizador */
     }
     @keyframes girar {
         to {
@@ -95,8 +97,7 @@
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
         const carga = document.getElementById('animação-carga');
-        carga.style.animationPlayState = 'running';
-        carga.style.animationDuration = `${tempoAtual}s`;
+        carga.style.animationDuration = `${tempoAtual}s`; // Define a duração da animação baseada no tempo atual
     }
 
     function iniciarPausarTempo() {
