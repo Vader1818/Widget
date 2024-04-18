@@ -31,10 +31,21 @@
         height: calc(100% - 20px); /* Ajusta a altura para compensar a largura da borda */
         top: 0;
         left: 0;
-        border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
+        transform-origin: center;
+        border: 10px solid transparent;
+        border-top-color: #3498db;
         border-radius: 50%;
+        animation: carregar linear forwards;
         z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
-        background: conic-gradient(from -90deg, #444444, #3498db); /* Gradiente de cinza para azul */
+        border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
+    }
+    @keyframes carregar {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
     }
     button {
         background-color: #222222;
@@ -93,8 +104,7 @@
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
         const carga = document.getElementById('animação-carga');
-        const percentual = (tempoAtual / tempoInicial) * 100;
-        carga.style.background = `conic-gradient(from -90deg, #444444 ${percentual}%, #3498db ${percentual}% 100%)`;
+        carga.style.animationDuration = `${tempoAtual}s`;
     }
 
     function iniciarPausarTempo() {
@@ -115,15 +125,19 @@
             }, 1000);
             emExecucao = true;
             document.getElementById('iniciarPausar').textContent = 'Pausar';
+            document.getElementById('animação-carga').style.animation = 'carregar linear forwards';
+            document.getElementById('animação-carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
         }
     }
 
     function zerarTempo() {
         clearInterval(temporizador);
-        tempoAtual = tempoInicial;
+        tempoAtual = 0;
         emExecucao = false;
         atualizarTempo();
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
+        document.getElementById('animação-carga').style.animation = '';
+        document.getElementById('animação-carga').style.borderTopColor = '#3498db'; // Restaura a cor azul do anel
     }
 
     function toggleOpcoes() {
@@ -139,7 +153,6 @@
 
     function setTempo(tempo) {
         tempoAtual = tempo;
-        tempoInicial = tempo;
         atualizarTempo();
         toggleOpcoes();
     }
