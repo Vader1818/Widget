@@ -32,11 +32,15 @@
         border: 10px solid transparent;
         border-top-color: #3498db;
         border-radius: 50%;
-        animation: girar 1s linear infinite;
-        animation-play-state: paused;
+        animation: carregar 1s linear forwards; /* Usando forwards para manter o preenchimento total quando o tempo atingir 0 */
         z-index: 0; /* Coloca o anel de carregamento atrás do número do temporizador */
+        animation-play-state: paused; /* Inicia a animação pausada */
+        border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
     }
-    @keyframes girar {
+    @keyframes carregar {
+        from {
+            transform: rotate(0deg);
+        }
         to {
             transform: rotate(360deg);
         }
@@ -118,6 +122,7 @@
             }, 1000);
             emExecucao = true;
             document.getElementById('iniciarPausar').textContent = 'Pausar';
+            document.getElementById('animação-carga').style.animationPlayState = 'running'; // Inicia a animação de carregamento
         }
     }
 
@@ -127,6 +132,7 @@
         emExecucao = false;
         atualizarTempo();
         document.getElementById('iniciarPausar').textContent = 'Iniciar';
+        document.getElementById('animação-carga').style.animation = ''; // Pára a animação de carregamento
     }
 
     function toggleOpcoes() {
