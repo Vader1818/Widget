@@ -34,7 +34,7 @@
         border: 10px solid #444444; /* Anel fixo, grosso e cinza escuro */
         border-radius: 50%;
         z-index: -1; /* Define o z-index para ficar por trás de todos os elementos */
-        background: conic-gradient(from -90deg, #444444, #3498db); /* Gradiente de cinza para azul */
+        background: conic-gradient(from -90deg, #3498db 0%, #444444 0%);
     }
     button {
         background-color: #222222;
@@ -82,6 +82,7 @@
     let temporizador;
     let tempoAtual = 0;
     let emExecucao = false;
+    let tempoInicial = 0;
 
     function formatarTempo(segundos) {
         const horas = Math.floor(segundos / 3600);
@@ -93,8 +94,8 @@
     function atualizarTempo() {
         document.getElementById('temporizador').textContent = formatarTempo(tempoAtual);
         const carga = document.getElementById('animação-carga');
-        const percentual = (tempoAtual / tempoInicial) * 100;
-        carga.style.background = `conic-gradient(from -90deg, #444444 ${percentual}%, #3498db ${percentual}% 100%)`;
+        const percentual = ((tempoInicial - tempoAtual) / tempoInicial) * 100;
+        carga.style.background = `conic-gradient(from -90deg, #3498db ${percentual}%, #444444 ${percentual}% 100%)`;
     }
 
     function iniciarPausarTempo() {
